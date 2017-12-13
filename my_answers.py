@@ -20,16 +20,16 @@ class NeuralNetwork(object):
         #
         # Note: in Python, you can define a function with a lambda expression,
         # as shown below.
-        #self.activation_function = lambda x : 1/(1 + np.exp(-x))  # Replace 0 with your sigmoid calculation.
+        self.activation_function = lambda x : 1/(1 + np.exp(-x))  # Replace 0 with your sigmoid calculation.
         
         ### If the lambda code above is not something you're familiar with,
         # You can uncomment out the following three lines and put your 
         # implementation there instead.
         #
-    def sigmoid(x):
-        return 1/(1 + np.exp(-x))  # Replace 0 with your sigmoid calculation here
+    #def sigmoid(x):
+     #   return 1/(1 + np.exp(-x))  # Replace 0 with your sigmoid calculation here
          
-        self.activation_function = sigmoid
+      #  self.activation_function = sigmoid
 
     def train(self, features, targets):
         ''' Train the network on batch of features and targets. 
@@ -99,12 +99,14 @@ class NeuralNetwork(object):
         
         #Printing shapes
         print("hidden_outputs",hidden_outputs.shape) 
+        print (hidden_outputs)
         print("output_error_term",output_error_term.shape)
+        print (output_error_term)
         
         # Weight step (input to hidden)
         delta_weights_i_h += hidden_error_term * X[:, None]
         # Weight step (hidden to output)
-        delta_weights_h_o +=  output_error_term * hidden_outputs 
+        delta_weights_h_o +=  hidden_outputs * output_error_term
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
